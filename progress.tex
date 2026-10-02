@@ -1,0 +1,75 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\title{Progress: MonitoredXXZDomainWall.jl}
+\date{2 October 2026}
+\begin{document}\maketitle
+\section*{Scope and provenance}
+Ninth item in the ordered project queue. This focused Julia MPS package
+studies a finite XXZ domain wall under periodic local projective $Z$
+measurements. It includes source, dependency metadata, README, example,
+tests, benchmark, model note, and an executed Jupyter notebook. The
+motivation is Gunawardana, Moghaddam, and Ojanen,
+\textit{Postselection-free ballistic-diffusive transition in monitored spin
+chains}, arXiv:2605.27350 (2026). No paper figure or code was copied.
+The local \texttt{noisy\_transverse\_ising} finite-step trajectory pattern
+was adapted. No connected GitHub source was reused; the dependencies retain
+their upstream licenses. \texttt{boundary\_xxz\_reference} was untouched.
+\section*{Commands and results, 2 October 2026 at 07:17 UTC}
+Using Julia 1.13.1, ITensors 0.9.14, ITensorMPS 0.3.23, one BLAS thread,
+and cached offline dependencies, ran from this package directory:
+\begin{verbatim}
+JULIA_DEPOT_PATH=/private/tmp/zeno-julia-depot:/Users/alexioschristopoulos/.julia JULIA_PKG_OFFLINE=true OPENBLAS_NUM_THREADS=1 julia --project=. -e 'using Pkg; Pkg.instantiate()'
+JULIA_DEPOT_PATH=/private/tmp/zeno-julia-depot:/Users/alexioschristopoulos/.julia JULIA_PKG_OFFLINE=true OPENBLAS_NUM_THREADS=1 julia --project=. test/runtests.jl
+JULIA_DEPOT_PATH=/private/tmp/zeno-julia-depot:/Users/alexioschristopoulos/.julia JULIA_PKG_OFFLINE=true OPENBLAS_NUM_THREADS=1 julia --project=. example.jl
+JULIA_DEPOT_PATH=/private/tmp/zeno-julia-depot:/Users/alexioschristopoulos/.julia JULIA_PKG_OFFLINE=true OPENBLAS_NUM_THREADS=1 julia --project=. benchmark.jl
+\end{verbatim}
+All 32 assertions passed in five groups (25.4 s including compilation).
+The first run had two failures because it compared numerical eigenstate
+expectations by exact floating-point equality; replacing those with
+$10^{-12}$ tolerances made the intended static-limit check robust.
+
+The zero-monitoring four-site trajectory at $t=0.4$ differed from exact
+dense unitary magnetizations by at most $1.5271\times10^{-4}$ for period
+$0.025$, with total $Z$ conserved. The $J=0$, $p=1$ domain wall remained
+static to $10^{-12}$, with all 16 measurement selections recorded over four
+periods. The exact dense channel retained unit trace and a nonnegative
+spectrum to numerical tolerance. For $N=4$, $J=0.7$, $\Delta=0.35$,
+$p=0.4$, period $0.1$, and five periods, the exact right-half transfer was
+$0.15066089$; 700 MPS trajectories gave $0.13256506\pm0.01180447$
+(one estimated standard error). The maximum magnetization difference was
+$0.03303403$; all sampled components passed the four-standard-error plus
+$0.025$ finite-step allowance in the test. The final total magnetization
+was zero to machine precision in both calculations.
+
+The warmed illustrative benchmark for 100 trajectories over five periods
+took 1.251 s at $N=6$ (largest bond 7) and 2.501 s at $N=10$
+(largest bond 8). This is a local timing, not a scaling estimate. Three
+Julia code cells in the notebook were executed sequentially and their
+printed outputs saved. No commit, push, publication, release, or GitHub
+repository modification was performed.
+\section*{Limits}
+The MPS calculation has finite-period symmetric-split error, bond
+truncation, and Monte Carlo uncertainty. The exact baseline is capped at
+four spins. Varying period at fixed measurement probability changes the
+physical monitoring rate. No ballistic-diffusive or entanglement-transition
+claim is supported by these small finite chains.
+\section*{Public-repository preparation, 2 October 2026 at 12:15 UTC}
+Reviewed the owner's existing GitHub repositories, including
+\texttt{Open-Systems-and-Current-Fluctuations} and
+\texttt{Local\_Temperature}. Their vectorized-density-operator routines
+would complicate this pure-state trajectory model, so no code was copied.
+Added comments and a README table connecting the gates, Born probabilities,
+Pauli magnetizations, right-half transfer, and unread measurement channel
+to physical objects. Expanded the executed notebook's physical explanations
+and added a Julia \texttt{.gitignore}. The public GitHub repository was
+created by the owner.
+
+Using Julia 1.13.1, cached ITensors 0.9.14 and ITensorMPS 0.3.23, and one
+BLAS thread, offline instantiation succeeded and all 32 assertions passed.
+The four-site example gave exact right-half transfer 0.15066089 and an
+MPS estimate $0.13256506\pm0.01180447$ from 700 trajectories; the final
+total Pauli $Z$ was zero to numerical precision. Warmed benchmarks for
+100 trajectories and five periods took 1.172 s at $N=6$ and 2.406 s
+at $N=10$, with largest observed bonds 7 and 8. These are illustrative
+local timings, not a system-size scaling result.
+\end{document}

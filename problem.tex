@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\title{Periodically monitored XXZ domain wall}
+\date{2 October 2026}
+\begin{document}\maketitle
+\section*{Model}
+For an even open chain, begin with
+$|\psi_0\rangle=|\uparrow\cdots\uparrow\downarrow\cdots\downarrow\rangle$.
+In Pauli conventions and $\hbar=1$,
+\begin{equation}
+H=J\sum_{i=1}^{N-1}(X_iX_{i+1}+Y_iY_{i+1})
++\Delta\sum_{i=1}^{N-1}Z_iZ_{i+1}.
+\end{equation}
+Since $X_iX_{i+1}+Y_iY_{i+1}=2(S_i^+S_{i+1}^-+S_i^-S_{i+1}^+)$,
+each bond gate uses $2J$ for the exchange coefficient and $4\Delta S_i^zS_{i+1}^z$.
+Odd half-steps around an even full step give a second-order unitary split.
+\section*{Measurement and observables}
+After each interval $\tau$, each site is independently selected with probability $p$.
+The outcome $s=\pm1$ has probability
+$q_s=\langle\psi|(I+sZ_i)/2|\psi\rangle$ and updates the trajectory to
+$P_s|\psi\rangle/\sqrt{q_s}$.
+The unread single-site channel is
+\begin{equation}
+\mathcal M_i(\rho)=(1-p)\rho+p(P_+\rho P_++P_-\rho P_-),
+\qquad P_\pm=(I\pm Z_i)/2.
+\end{equation}
+For a matrix element whose ket and bra have different $i$th spin,
+$\mathcal M_i$ multiplies it by $1-p$. The exact small-system baseline uses
+$e^{-i\tau H}$ followed by every $\mathcal M_i$.
+We record $\langle Z_i\rangle$ and
+$Q_R=\sum_{i>N/2}(1+\langle Z_i\rangle)/2$, the number of up spins
+transferred into the initially down half. Both the unitary and local
+measurements commute with total $Z$; every trajectory conserves it.
+\section*{Scope}
+The finite-step gate split, bond truncation, trajectory sampling, and finite
+chain length are distinct approximations or limits. Holding $p$ fixed while
+changing $\tau$ changes the monitoring rate. For a fixed nominal rate
+$r$, use $p=1-e^{-r\tau}$. No phase-transition inference follows from the
+small-chain calculations in this package.
+\end{document}
