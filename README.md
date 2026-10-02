@@ -61,8 +61,3 @@ Tests compare the zero-measurement MPS unitary with exact dense evolution, check
 
 Use smaller `period` to reduce Trotter error; this also changes the physical monitoring rate if `p` stays fixed. To refine while holding approximately fixed rate, set `p = 1-exp(-rate*period)`. Increase `maxdim` and decrease `cutoff` to assess MPS truncation. Monte Carlo standard errors do not include these systematic errors. The exact dense reference is capped at four sites. Finite-chain transfer curves cannot establish a ballistic or diffusive phase.
 
-The local `noisy_transverse_ising` package supplied the finite-step MPS trajectory pattern, adapted here to projective monitoring. No connected GitHub code was reused. Existing dependencies retain their upstream licenses.
-I also reviewed the owner's existing `Open-Systems-and-Current-Fluctuations`
-and `Local_Temperature` repositories before publication. Their vectorized
-density-operator code would complicate this pure-state trajectory package, so
-no code was copied.
