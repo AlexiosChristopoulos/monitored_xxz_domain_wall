@@ -1,6 +1,10 @@
 # MonitoredXXZDomainWall.jl
 
-A small Julia MPS package for finite XXZ chains that start with all left-half spins up and right-half spins down. At each period, each spin is independently selected for a projective `Z` measurement. The package tracks local magnetization and the expected number of up spins transferred into the initially down half.
+Domain-wall dynamics in a finite XXZ chain, evolved with a Julia MPS
+solver. The left-half spins start up and the right-half spins start down.
+At each period, each spin is independently selected for a projective `Z`
+measurement. The observables are local magnetization and the expected
+number of up spins transferred into the initially down half.
 
 ## Model
 
@@ -30,7 +34,7 @@ observable at a finite time, not an instantaneous current. For one selected
 site, the Born probability of `up` is `(1+⟨Zᵢ⟩)/2`; averaging over unread
 outcomes suppresses coherence between opposite local `Z` sectors by `1-p`.
 
-This compact model is motivated by [Gunawardana, Moghaddam, and Ojanen (2026)](https://arxiv.org/abs/2605.27350). It is a finite-chain learning and comparison tool; it does not claim to reproduce that work's phase-transition results.
+This compact model is motivated by [Gunawardana, Moghaddam, and Ojanen (2026)](https://arxiv.org/abs/2605.27350). The examples compare finite-chain dynamics; establishing a phase transition would require a separate finite-size study.
 
 ## Install and run
 
@@ -57,7 +61,12 @@ println(exact.transfer[end])
 
 ## Checks and limits
 
-Tests compare the zero-measurement MPS unitary with exact dense evolution, check static projective limits, total-spin conservation, trace and positivity, MPS trajectory averages against the dense channel, and time-step/bond refinement. See the [executed notebook](xxz_monitoring_tutorial.ipynb), [model notes](problem.tex), and [progress log](progress.tex).
+Tests compare the zero-measurement MPS unitary with exact dense evolution, check static projective limits, total-spin conservation, trace and positivity, MPS trajectory averages against the dense channel, and time-step/bond refinement. See the [notebook](xxz_monitoring_tutorial.ipynb), [model notes](problem.tex), and [progress log](progress.tex).
 
 Use smaller `period` to reduce Trotter error; this also changes the physical monitoring rate if `p` stays fixed. To refine while holding approximately fixed rate, set `p = 1-exp(-rate*period)`. Increase `maxdim` and decrease `cutoff` to assess MPS truncation. Monte Carlo standard errors do not include these systematic errors. The exact dense reference is capped at four sites. Finite-chain transfer curves cannot establish a ballistic or diffusive phase.
 
+The MPS trajectory structure follows [`noisy_transverse_ising`](../noisy_transverse_ising/),
+with projective measurements replacing Lindblad jumps.
+`Open-Systems-and-Current-Fluctuations` and `Local_Temperature` are context
+references; their vectorized density-operator code is not used here.
+Dependencies retain their upstream licenses.
